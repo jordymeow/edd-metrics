@@ -147,6 +147,7 @@
       //$('#recurring-compare span').html( data.subscriptions.earnings.compare.percentage + compareTemp ).removeClass().addClass( data.subscriptions.earnings.compare.classes );
 
       $('#recurring-revenue-30').html( data.subscriptions.earnings30 );
+      $('#recurring-revenue-1y').html( data.subscriptions.earnings1y );
 
     }
 

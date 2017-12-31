@@ -65,7 +65,7 @@
 	    <div class="edd-metrics-box">
 	        <p class="top-text"><?php _e('Recurring Revenue', 'edd-metrics'); ?></p>
 	        <h2 id="recurring-revenue"></h2>
-	        <p class="bottom-text" id="recurring-compare"><span></span></p> 
+	        <p class="bottom-text" id="recurring-compare"><span></span></p>
 	    </div>
 	</div>
 
@@ -81,6 +81,14 @@
 	    <div class="edd-metrics-box">
 	        <p class="top-text"><?php _e('Recurring Next 30 Days', 'edd-metrics'); ?></p>
 	        <h2 id="recurring-revenue-30"></h2>
+	        <!-- <p class="bottom-text" id="subscriptions-compare"><span></span></p> -->
+	    </div>
+	</div>
+
+	<div class="one-half last-col">
+	    <div class="edd-metrics-box">
+	        <p class="top-text"><?php _e('Recurring Next One Year', 'edd-metrics'); ?></p>
+	        <h2 id="recurring-revenue-1y"></h2>
 	        <!-- <p class="bottom-text" id="subscriptions-compare"><span></span></p> -->
 	    </div>
 	</div>
@@ -130,5 +138,5 @@
 	</div>
 
     <?php do_action('edd_metrics_dash_sidebar'); ?>
-    
+
 </div>

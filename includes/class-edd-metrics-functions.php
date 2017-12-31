@@ -70,7 +70,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
 
             // add_action('init', function() {
-                
+
             //     var_dump( self::metrics_batch_2() );
             //     exit;
             // });
@@ -101,7 +101,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
                 $metrics = array(
                     'dates' => $dates,
-                    'sales' => self::get_sales(), 
+                    'sales' => self::get_sales(),
                     'earnings' => self::get_earnings(),
                 );
 
@@ -146,20 +146,22 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
                 $prev_recurring_rev = self::get_subscription_revenue( strtotime( $dates['previous_start'] ), strtotime( $dates['previous_end'] ) );
 
                 $earnings_30 = self::get_subscription_revenue( strtotime( 'now' ), strtotime( '+ 30 days' ) );
+                $earnings_1y = self::get_subscription_revenue( strtotime( 'now' ), strtotime( '+ 1 year' ) );
 
                 $metrics = array(
                     'dates' => $dates,
                     'renewals' => self::get_renewals( self::$start, self::$end ),
-                    'subscriptions' => array( 
+                    'subscriptions' => array(
                         'number' => self::get_subscriptions( self::$startstr, self::$endstr ),
                         'earnings' => array(
                             'total' => edd_currency_filter( edd_format_amount( edd_sanitize_amount( $recurring_revenue ) ) ),
                             'compare' => self::subscription_compare( $recurring_revenue, $prev_recurring_rev),
                             ),
-                        'earnings30' => edd_currency_filter( edd_format_amount( edd_sanitize_amount( $earnings_30 ) ) )
+                        'earnings30' => edd_currency_filter( edd_format_amount( edd_sanitize_amount( $earnings_30 ) ) ),
+                        'earnings1y' => edd_currency_filter( edd_format_amount( edd_sanitize_amount( $earnings_1y ) ) ),
                         ),
-                    'discounts' => array( 
-                        'now' => $discounts, 
+                    'discounts' => array(
+                        'now' => $discounts,
                         'compare' => self::compare_discounts( $discounts['amount'] ),
                     ),
                     'commissions' => self::get_commissions( self::$start, self::$end )
@@ -186,14 +188,14 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
         public static function subscription_compare( $rev, $prev_rev) {
 
             if( empty( $rev ) || empty ( $prev_rev ) ) {
-                return array( 
-                    'classes' => '', 
-                    'percentage' => '-' 
+                return array(
+                    'classes' => '',
+                    'percentage' => '-'
                 );
             }
 
-            return array( 
-                'classes' => self::get_arrow_classes( $rev, $prev_rev ), 
+            return array(
+                'classes' => self::get_arrow_classes( $rev, $prev_rev ),
                 'percentage' => self::get_percentage( $rev, $prev_rev )
             );
 
@@ -219,14 +221,14 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
             $refunds = self::get_refunds();
 
-            return array( 
+            return array(
                 'total' => edd_currency_filter( edd_format_amount( $earnings ) ),
-                'compare' => array( 
-                    'classes' => $classes, 
+                'compare' => array(
+                    'classes' => $classes,
                     'percentage' => self::get_percentage( $earnings, $previous_earnings ),
-                    'total' => edd_currency_filter( edd_format_amount( $previous_earnings ) ), 
-                    ), 
-                //'avgyearly' => self::get_avg_yearly( $earnings, $previous_earnings, $dates['num_days'] ), 
+                    'total' => edd_currency_filter( edd_format_amount( $previous_earnings ) ),
+                    ),
+                //'avgyearly' => self::get_avg_yearly( $earnings, $previous_earnings, $dates['num_days'] ),
                 'avgpercust' => self::get_avg_percust( $earnings, $previous_earnings ),
                 'refunds' => $refunds,
                 'avgmonthly' => self::get_avg_monthly()
@@ -265,11 +267,11 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
             // output classes for arrows and colors
             $classes = self::get_arrow_classes( $total, $prev_total );
 
-            return array( 
+            return array(
                 'total' => edd_currency_filter( edd_format_amount( $total ) ),
-                'compare' => array( 
-                    'classes' => $classes, 
-                    'percentage' => self::get_percentage( $total, $prev_total ) 
+                'compare' => array(
+                    'classes' => $classes,
+                    'percentage' => self::get_percentage( $total, $prev_total )
                     ),
                 'current_customers' => $current_customers
                 );
@@ -287,10 +289,10 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
             $EDD_DB_Customers = new EDD_DB_Customers();
 
-            $args = array( 
-                'date' => array( 
-                    'start' => $start, 
-                    'end' => $end 
+            $args = array(
+                'date' => array(
+                    'start' => $start,
+                    'end' => $end
                     )
                 );
 
@@ -335,7 +337,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
             // Yearly estimate - avg rev per day in set time period, averaged out over 365 days. So $287/day in the last 30 days would be $287*365
         $comp_dates = self::get_compare_dates();
-        $num_days = $comp_dates['num_days'];        
+        $num_days = $comp_dates['num_days'];
 
             $avgyearly = ( $earnings/$num_days )*365;
             $previous_avgyearly = ( $previous_earnings/$num_days )*365;
@@ -357,7 +359,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
         public static function get_sales() {
 
             $dates = self::get_compare_dates();
- 
+
             // Get current and previous period sales
             $EDD_Stats = new EDD_Payment_Stats();
             $sales = $EDD_Stats->get_sales( 0, $dates['start'], $dates['end'] );
@@ -425,7 +427,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
         $new_val = edd_sanitize_amount( $new_val );
             $old_val = edd_sanitize_amount( $old_val );
-        
+
             if( empty( $old_val ) || $old_val === 0 )
                 return 0;
 
@@ -464,7 +466,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
             } else {
 
                 return round( self::percent_change( $current_value, $prev_value ), 1 );
-                
+
             }
 
         }
@@ -536,7 +538,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
                                     case 'failed':
                                         $classes = 'metrics-negative';
                                         break;
-                                    
+
                                     default:
                                         $classes = 'metrics-nochange';
                                         break;
@@ -587,8 +589,8 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
             if( empty($count) )
                 $count = '0';
 
-            return array( 
-                'count' => $count, 
+            return array(
+                'count' => $count,
                 'earnings' => edd_currency_filter( edd_format_amount( $earnings ) ),
                 );
         }
@@ -609,10 +611,10 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
             $renewals = self::get_renewals_by_date( $start, $end );
 
-            $renewals['compare'] = self::compare_renewals( $renewals['count'] ); 
+            $renewals['compare'] = self::compare_renewals( $renewals['count'] );
 
             return $renewals;
-                    
+
         }
 
         /**
@@ -628,7 +630,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
             $start = strtotime( $dates['previous_start'] );
             $end = strtotime( $dates['previous_end'] );
-            
+
             $previous_renewals = self::get_renewals_by_date( $start, $end );
 
             // output classes for arrows and colors
@@ -663,7 +665,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
          *
          * @access      public
          * @since       0.2.0
-         * @return      
+         * @return
          */
         public static function get_discounts( $start = string, $end = string ) {
 
@@ -699,7 +701,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
                         $amount += $discount_amount;
                         $count++;
                     }
-                    
+
                 }
                 wp_reset_postdata();
             } else {
@@ -715,7 +717,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
          *
          * @access      public
          * @since       0.2.0
-         * @return      array()    
+         * @return      array()
          */
         public static function compare_discounts( $current_discounts_amount = null ) {
 
@@ -811,7 +813,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
         }
 
         /**
-         * Get subscriptions using EDD_Subscriptions_DB class 
+         * Get subscriptions using EDD_Subscriptions_DB class
          * taken from edd-recurring/includes/admin/class-subscriptions-list-table.php
          * $start and $end must be strings, not strtotime or date objects
          * @access      public
@@ -829,13 +831,13 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
             $db = new EDD_Subscriptions_DB;
 
             // $total is an array of objects. To get more info, use $total[$key]->whatever
-            $total = $db->count( 
-                array( 
-                    'status' => 'active', 
-                    'date' => array( 
-                        'start' => $start, 
+            $total = $db->count(
+                array(
+                    'status' => 'active',
+                    'date' => array(
+                        'start' => $start,
                         'end' => $end
-                    ) 
+                    )
                 )
             );
 
@@ -916,7 +918,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
             // Loop through each day between two dates, and get totals
             $begin = new DateTime( $dates['start'] );
             $end = new DateTime( $dates['end'] );
-            
+
             $interval = DateInterval::createFromDateString('1 day');
             $period = new DatePeriod($begin, $interval, $end);
 
@@ -940,7 +942,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
         public static function get_net_revenue( $start, $end ) {
 
             $twomoago = date( "jS F Y", strtotime( "-2 months" ) );
-            
+
             $EDD_Stats = new EDD_Payment_Stats();
             $earnings_then = $EDD_Stats->get_earnings( 0, $twomoago, date( "jS F Y", $start ) );
 

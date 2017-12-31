@@ -1,15 +1,14 @@
 <?php
 /**
  * Plugin Name:     EDD Metrics
- * Plugin URI:      http://metricswp.com
  * Description:     All the stats, analytics, and metrics you need when selling stuff with Easy Digital Downloads.
- * Version:         0.6
- * Author:          Scott Bolinger
+ * Version:         0.7
+ * Author:          cott Bolinger
  * Author URI:      http://scottbolinger.com
  * Text Domain:     edd-metrics
  *
  * @package         EDD\EDD Metrics
- * @author          Scott Bolinger
+ * @author          Scott Bolinger (Modified by Jordy Meow)
  * @copyright       Copyright (c) Scott Bolinger 2016
  *
  */
@@ -63,7 +62,7 @@ if( !class_exists( 'EDD_Metrics' ) ) {
          */
         private function setup_constants() {
             // Plugin version
-            define( 'EDD_Metrics_VER', '0.6' );
+            define( 'EDD_Metrics_VER', '0.7' );
 
             // Plugin path
             define( 'EDD_Metrics_DIR', plugin_dir_path( __FILE__ ) );
@@ -114,7 +113,7 @@ if( !class_exists( 'EDD_Metrics' ) ) {
         public function load_textdomain() {
 
             load_plugin_textdomain( 'edd-metrics' );
-            
+
         }
 
 
@@ -127,7 +126,7 @@ if( !class_exists( 'EDD_Metrics' ) ) {
         public function settings_page() {
 
             add_submenu_page( 'edit.php?post_type=download', 'Metrics', 'Metrics', 'manage_options', 'edd_metrics', array( $this, 'render_settings') );
-            
+
         }
 
         /**
@@ -155,7 +154,7 @@ if( !class_exists( 'EDD_Metrics' ) ) {
 
             </div>
             <?php
-            
+
         }
     }
 } // End if class_exists check
