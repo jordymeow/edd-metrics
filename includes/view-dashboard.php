@@ -95,7 +95,7 @@
 	<?php endif; ?>
 
 	<?php if( class_exists('EDD_Software_Licensing') ) : ?>
-	<div class="one-half last-col">
+	<div class="one-half">
 	    <div class="edd-metrics-box">
 	        <p class="top-text"><?php _e('License Renewals', 'edd-metrics'); ?></p>
 	        <h2 id="renewal-amount" class="metrics-title1"></h2>

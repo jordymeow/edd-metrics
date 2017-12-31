@@ -147,6 +147,7 @@ if( !class_exists( 'EDD_Metrics_Functions' ) ) {
 
                 $earnings_30 = self::get_subscription_revenue( strtotime( 'now' ), strtotime( '+ 30 days' ) );
                 $earnings_1y = self::get_subscription_revenue( strtotime( 'now' ), strtotime( '+ 1 year' ) );
+                //echo "Earnings 1y: $earnings_1y";
 
                 $metrics = array(
                     'dates' => $dates,
